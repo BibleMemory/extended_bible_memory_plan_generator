@@ -3,7 +3,14 @@
 // the DOM: date formatting and the row -> cell-data transform.
 
 import { describe, it, expect } from 'vitest';
-import { formatPlanDate, formatLongDate, rowToCells } from '../src/ui/render.js';
+import { formatPlanDate, formatPlanDateWithYear, formatLongDate, rowToCells } from '../src/ui/render.js';
+
+describe('formatPlanDateWithYear', () => {
+  it('appends the year to the abbreviated date', () => {
+    expect(formatPlanDateWithYear(new Date(2026, 6, 27))).toBe('Jul. 27, 2026');
+    expect(formatPlanDateWithYear(new Date(2027, 4, 15))).toBe('May 15, 2027');
+  });
+});
 
 describe('formatPlanDate', () => {
   it.each([

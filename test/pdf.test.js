@@ -2,7 +2,15 @@ import { describe, it, expect } from 'vitest';
 import { generateSchedule } from '../src/lib/schedule.js';
 import { buildPlanPdf } from '../src/lib/plan-pdf.js';
 import { createPdf, textWidth } from '../src/lib/pdf.js';
-import { rowToCells } from '../src/ui/render.js';
+import { rowToCells, formatPlanDateWithYear } from '../src/ui/render.js';
+
+/** Mirror the Download PDF handler: cells with year-inclusive dates. */
+function pdfRows(plan) {
+  return plan.rows.map((row) => ({
+    ...rowToCells(row),
+    date: formatPlanDateWithYear(row.date),
+  }));
+}
 
 const EPHESIANS = { name: 'Ephesians', chapters: [23, 22, 21, 32, 33, 24] };
 
@@ -22,7 +30,7 @@ function buildEphesiansPdf() {
   return buildPlanPdf({
     title: plan.title,
     subtitle: 'Starting January 1, 2023 · 1 verse per day · 6 days per week',
-    rows: plan.rows.map(rowToCells),
+    rows: pdfRows(plan),
   });
 }
 
@@ -117,6 +125,13 @@ describe('buildPlanPdf — Ephesians plan', () => {
     expect([...all.matchAll(/\(Day off\) Tj/g)].length).toBe(25);
     expect(all).toContain('(6:24) Tj'); // last verse
     expect(all).toContain('(1:1\\2266:24) Tj'); // final cumulative review, en dash
+  });
+
+  it('dates carry the year', () => {
+    const all = streams.join('\n');
+    expect(all).toContain('(Jan. 1, 2023) Tj'); // first row
+    expect(all).toContain('(Jun. 29, 2023) Tj'); // day 180
+    expect(all).not.toContain('(Jan. 1) Tj'); // no yearless dates
   });
 });
 

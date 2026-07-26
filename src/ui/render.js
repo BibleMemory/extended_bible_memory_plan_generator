@@ -20,6 +20,11 @@ export function formatPlanDate(date) {
   return `${MONTH_ABBR[date.getMonth()]} ${date.getDate()}`;
 }
 
+/** Format a Date as "Jan. 1, 2026" — used in the PDF, where there's room. */
+export function formatPlanDateWithYear(date) {
+  return `${formatPlanDate(date)}, ${date.getFullYear()}`;
+}
+
 /** Format a Date as "January 1, 2026". */
 export function formatLongDate(date) {
   return `${MONTH_FULL[date.getMonth()]} ${date.getDate()}, ${date.getFullYear()}`;
@@ -162,7 +167,10 @@ export function renderPlan(container, plan, options = {}) {
     const { bytes, filename } = buildPlanPdf({
       title: plan.title,
       subtitle: buildSubtitle(plan, options),
-      rows: plan.rows.map(rowToCells),
+      rows: plan.rows.map((row) => ({
+        ...rowToCells(row),
+        date: formatPlanDateWithYear(row.date),
+      })),
     });
     const blob = new Blob([bytes], { type: 'application/pdf' });
     const url = URL.createObjectURL(blob);
