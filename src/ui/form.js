@@ -10,7 +10,7 @@ const DEFAULT_DAYS_PER_WEEK = 6;
 const CALLOUT_VERSE_THRESHOLD = 160;
 
 const CALLOUT_TEXT =
-  'If you are new to Scripture memorization, we suggest starting with a ' +
+  'If you are new to extended scripture memorization, we suggest starting with a ' +
   'book between 90 and 160 verses long — for example, Ephesians, ' +
   'Philippians, Colossians, James, or 1 Peter.';
 
