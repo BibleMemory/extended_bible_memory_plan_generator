@@ -95,7 +95,8 @@
 
   .bmp-widget .bmp-estimates {
     margin: 0 0 0.8em;
-    font-size: 10pt;
+    font-size: 11pt;
+    font-style: italic;
     text-align: center;
     break-after: avoid;
     page-break-after: avoid;

@@ -13,7 +13,6 @@ const MARGIN = 54; // 0.75"
 
 const TITLE_SIZE = 18;
 const SUBTITLE_SIZE = 11;
-const ESTIMATE_SIZE = 10;
 const HEAD_SIZE = 10;
 const HEAD_SUB_SIZE = 8;
 const BODY_SIZE = 10;
@@ -93,7 +92,7 @@ export function buildPlanPdf({ title, subtitle, estimates = [], rows }) {
       let y2 = titleY - 20;
       for (const line of estimates) {
         y2 -= 16;
-        page.textCentered(line, centerX, y2, 'F1', ESTIMATE_SIZE);
+        page.textCentered(line, centerX, y2, 'F3', SUBTITLE_SIZE);
       }
       headTop = y2 - 28;
     } else {
