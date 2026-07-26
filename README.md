@@ -28,20 +28,20 @@ Works on Ghost(Pro) and self-hosted; no theme changes needed.
 
 ```html
 <div data-bible-memory-plan></div>
-<script src="https://cdn.jsdelivr.net/gh/BibleMemory/extended_bible_memory_plan_generator@v1.0.0/dist/bible-memory-plan.min.js" defer></script>
+<script src="https://cdn.jsdelivr.net/gh/BibleMemory/extended_bible_memory_plan_generator@1/dist/bible-memory-plan.min.js" defer></script>
 ```
 
 3. **Publish the page.** The widget loads and mounts automatically.
 
-#### Updating the version
+#### Version ranges vs. pinned versions
 
-The URL above pins the bundle to release `v1.0.0`. To upgrade to a newer release:
+The URL above uses the `@1` range: jsDelivr resolves it to the newest `1.x` release tag, so bug fixes arrive without editing the snippet, while a future breaking `2.0` would not be picked up automatically. New releases can take up to 12 hours to propagate through the CDN cache.
 
-1. Visit [GitHub Releases](https://github.com/BibleMemory/extended_bible_memory_plan_generator/releases) and find the tag you want (e.g., `v1.1.0`).
-2. Replace `@v1.0.0` in the script URL with the new version tag, e.g., `@v1.1.0`.
-3. Save the page. Browsers will download the new bundle on next visit.
+To pin an exact release instead — so the published page never changes until you edit it:
 
-Pinned version tags mean published blog pages never break if we push new code; you upgrade by editing the snippet.
+1. Visit [GitHub Releases](https://github.com/BibleMemory/extended_bible_memory_plan_generator/releases) and pick the tag you want (e.g., `v1.0.1`).
+2. Replace `@1` in the script URL with that tag, e.g., `@v1.0.1`.
+3. Save the page. Upgrade later by editing the tag in the snippet.
 
 ### Path B: Ghost Theme Custom Page Template (Optional)
 

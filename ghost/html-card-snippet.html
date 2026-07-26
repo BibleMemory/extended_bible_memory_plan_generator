@@ -4,14 +4,13 @@
   Copy & paste this into a Ghost HTML card on any page where you want
   the widget to appear.
 
-  To update the version: change the @v1.0.0 tag to @v1.1.0 (or whichever
-  release tag is current). See the GitHub releases page:
+  The @1 range always serves the newest 1.x release via jsDelivr, so fixes
+  arrive without editing this snippet (allow up to 12 hours for the CDN
+  cache to pick up a new release). To pin an exact release instead — so the
+  page never changes until you edit it — replace @1 with a release tag,
+  e.g. @v1.0.1. See the GitHub releases page:
   https://github.com/BibleMemory/extended_bible_memory_plan_generator/releases
-
-  The @vX.Y.Z tag pins the bundle to a specific release, so published pages
-  will never break if we push a new version. Always review release notes before
-  upgrading.
 -->
 
 <div data-bible-memory-plan></div>
-<script src="https://cdn.jsdelivr.net/gh/BibleMemory/extended_bible_memory_plan_generator@v1.0.0/dist/bible-memory-plan.min.js" defer></script>
+<script src="https://cdn.jsdelivr.net/gh/BibleMemory/extended_bible_memory_plan_generator@1/dist/bible-memory-plan.min.js" defer></script>
