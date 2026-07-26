@@ -1,0 +1,364 @@
+/*
+ * Bible Memory Plan Generator — screen styles
+ *
+ * Everything is scoped under .bmp-widget so this can be dropped into any
+ * Ghost theme without leaking out (and without inheriting too much from a
+ * hostile theme reset). The typographic goal is a well-set book page:
+ * centered serif title, a restrained hairline-ruled table, generous
+ * whitespace — modeled on Appendix 2 of "How to Memorize Scripture for Life".
+ */
+
+.bmp-widget {
+  /* Local baseline so the widget looks consistent regardless of the host
+     theme's resets, but we deliberately don't touch anything outside this
+     selector. */
+  font-family: Georgia, 'Times New Roman', Times, serif;
+  font-size: 16px;
+  line-height: 1.5;
+  color: #222;
+  box-sizing: border-box;
+}
+
+.bmp-widget *,
+.bmp-widget *::before,
+.bmp-widget *::after {
+  box-sizing: inherit;
+}
+
+/* ---------------------------------------------------------------------
+   Form
+   --------------------------------------------------------------------- */
+
+.bmp-form {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  gap: 1em 1.5em;
+  margin: 0 0 1.5em;
+  padding: 1.25em;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  background: #fafafa;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+}
+
+.bmp-field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35em;
+  min-width: 8em;
+}
+
+.bmp-field label {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35em;
+  font-size: 0.8em;
+  font-weight: 600;
+  color: #555;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+
+.bmp-field select,
+.bmp-field input {
+  font-family: inherit;
+  font-size: 1em;
+  font-weight: normal;
+  text-transform: none;
+  letter-spacing: normal;
+  color: #222;
+  padding: 0.5em 0.6em;
+  border: 1px solid #bbb;
+  border-radius: 3px;
+  background: #fff;
+}
+
+.bmp-field select:focus,
+.bmp-field input:focus {
+  outline: 2px solid #6b8afd;
+  outline-offset: 1px;
+}
+
+.bmp-generate {
+  align-self: flex-end;
+  padding: 0.6em 1.4em;
+  border: 1px solid #2a2a2a;
+  border-radius: 3px;
+  background: #2a2a2a;
+  color: #fff;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+  font-size: 0.95em;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.bmp-generate:hover {
+  background: #444;
+  border-color: #444;
+}
+
+.bmp-generate:active {
+  background: #111;
+  border-color: #111;
+}
+
+/* ---------------------------------------------------------------------
+   Callout
+   --------------------------------------------------------------------- */
+
+.bmp-callout:not([hidden]) {
+  margin: 0 0 1.5em;
+  padding: 0.9em 1.1em;
+  border-left: 4px solid #6b8afd;
+  border-radius: 2px;
+  background: #eef2ff;
+  color: #33415c;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+  font-size: 0.9em;
+  line-height: 1.6;
+}
+
+/* ---------------------------------------------------------------------
+   Plan: title, subtitle, actions
+   --------------------------------------------------------------------- */
+
+.bmp-plan:not([hidden]) {
+  margin-top: 1em;
+}
+
+.bmp-title {
+  margin: 0 0 0.25em;
+  font-family: Georgia, 'Times New Roman', Times, serif;
+  font-size: 1.75em;
+  font-weight: normal;
+  text-align: center;
+  color: #1a1a1a;
+}
+
+.bmp-subtitle {
+  margin: 0 0 1.25em;
+  font-family: Georgia, 'Times New Roman', Times, serif;
+  font-size: 0.95em;
+  font-style: italic;
+  text-align: center;
+  color: #777;
+}
+
+.bmp-actions {
+  display: flex;
+  justify-content: center;
+  margin: 0 0 1.5em;
+}
+
+.bmp-print {
+  padding: 0.5em 1.25em;
+  border: 1px solid #2a2a2a;
+  border-radius: 3px;
+  background: #fff;
+  color: #2a2a2a;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+  font-size: 0.9em;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.bmp-print:hover {
+  background: #2a2a2a;
+  color: #fff;
+}
+
+/* ---------------------------------------------------------------------
+   Table
+   --------------------------------------------------------------------- */
+
+.bmp-table {
+  width: auto;
+  max-width: 100%;
+  margin: 0 auto;
+  border-collapse: collapse;
+  font-family: Georgia, 'Times New Roman', Times, serif;
+  font-size: 0.95em;
+}
+
+.bmp-table th,
+.bmp-table td {
+  padding: 0.5em 1.25em;
+  text-align: center;
+  vertical-align: middle;
+}
+
+.bmp-table thead th {
+  padding-bottom: 0.6em;
+  border-bottom: 2px solid #333;
+  font-weight: 700;
+  font-size: 0.9em;
+  color: #1a1a1a;
+  white-space: nowrap;
+}
+
+.bmp-th-sub {
+  display: block;
+  margin-top: 0.2em;
+  font-weight: 400;
+  font-size: 0.85em;
+  color: #777;
+  white-space: nowrap;
+}
+
+.bmp-table tbody tr {
+  border-bottom: 1px solid #e2e2e2;
+}
+
+.bmp-table tbody tr:last-child {
+  border-bottom: none;
+}
+
+.bmp-table tbody td {
+  color: #222;
+}
+
+.bmp-off td {
+  font-style: italic;
+  color: #888;
+}
+
+/* ---------------------------------------------------------------------
+   Responsive
+   --------------------------------------------------------------------- */
+
+@media (max-width: 600px) {
+  .bmp-form {
+    padding: 1em;
+    gap: 0.85em 1em;
+  }
+
+  .bmp-field {
+    min-width: 45%;
+    flex: 1 1 45%;
+  }
+
+  .bmp-generate {
+    flex: 1 1 100%;
+  }
+
+  .bmp-title {
+    font-size: 1.4em;
+  }
+
+  .bmp-subtitle {
+    font-size: 0.85em;
+  }
+
+  .bmp-table {
+    font-size: 0.8em;
+  }
+
+  .bmp-table th,
+  .bmp-table td {
+    padding: 0.4em 0.6em;
+  }
+}
+
+@media (max-width: 400px) {
+  .bmp-table {
+    font-size: 0.7em;
+  }
+
+  .bmp-table th,
+  .bmp-table td {
+    padding: 0.3em 0.4em;
+  }
+}
+
+/*
+ * Bible Memory Plan Generator — print styles
+ *
+ * Wrapped in @media print even though this file may also be loaded with
+ * media="print" on the <link>, so it stays safe either way. Goal: a clean
+ * black-on-white printout with the table headings repeating on every page.
+ */
+
+@media print {
+  /* Hide interactive chrome that has no place on paper. */
+  .bmp-widget .bmp-form,
+  .bmp-widget .bmp-callout,
+  .bmp-widget .bmp-actions {
+    display: none !important;
+  }
+
+  .bmp-widget {
+    color: #000;
+    background: #fff;
+    font-size: 12pt;
+    line-height: 1.4;
+  }
+
+  .bmp-widget * {
+    color: #000 !important;
+    background: transparent !important;
+    box-shadow: none !important;
+    text-shadow: none !important;
+  }
+
+  .bmp-widget .bmp-title {
+    margin: 0 0 0.2em;
+    font-size: 18pt;
+    text-align: center;
+    break-after: avoid;
+    page-break-after: avoid;
+  }
+
+  .bmp-widget .bmp-subtitle {
+    margin: 0 0 0.8em;
+    font-size: 11pt;
+    font-style: italic;
+    text-align: center;
+    break-after: avoid;
+    page-break-after: avoid;
+  }
+
+  .bmp-widget .bmp-table {
+    width: auto;
+    margin: 0 auto;
+    border-collapse: collapse;
+    font-size: 10.5pt;
+  }
+
+  .bmp-widget .bmp-table th,
+  .bmp-widget .bmp-table td {
+    padding: 0.3em 0.7em;
+    text-align: center;
+    border: none;
+  }
+
+  /* Repeat the header row on every printed page. */
+  .bmp-widget .bmp-table thead {
+    display: table-header-group;
+  }
+
+  .bmp-widget .bmp-table tfoot {
+    display: table-footer-group;
+  }
+
+  .bmp-widget .bmp-table thead th {
+    border-bottom: 1px solid #000;
+    font-weight: 700;
+  }
+
+  .bmp-widget .bmp-th-sub {
+    display: block;
+    font-weight: 400;
+    font-size: 0.85em;
+  }
+
+  .bmp-widget .bmp-table tbody tr {
+    border-bottom: 0.5pt solid #999;
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+
+  .bmp-widget .bmp-off td {
+    font-style: italic;
+  }
+}

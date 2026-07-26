@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Bible Memory Plan Generator</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html, body {
+      font-family: Georgia, 'Times New Roman', Times, serif;
+      background: #fafafa;
+      color: #222;
+    }
+
+    body {
+      padding: 2rem 1rem;
+    }
+
+    .container {
+      max-width: 1000px;
+      margin: 0 auto;
+      background: #fff;
+      padding: 3rem 2rem;
+      border-radius: 6px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    }
+
+    h1 {
+      font-size: 2.2em;
+      margin-bottom: 0.5rem;
+      text-align: center;
+      color: #1a1a1a;
+    }
+
+    .intro {
+      text-align: center;
+      color: #777;
+      margin-bottom: 2rem;
+      line-height: 1.6;
+      font-style: italic;
+    }
+
+    .print-note {
+      background: #eef2ff;
+      border-left: 4px solid #6b8afd;
+      padding: 1rem;
+      margin-bottom: 2rem;
+      border-radius: 2px;
+      font-size: 0.95em;
+      color: #33415c;
+      line-height: 1.6;
+    }
+
+    .divider {
+      height: 1px;
+      background: #e2e2e2;
+      margin: 3rem 0;
+    }
+
+    footer {
+      text-align: center;
+      font-size: 0.85em;
+      color: #999;
+      margin-top: 3rem;
+      padding-top: 2rem;
+      border-top: 1px solid #e2e2e2;
+    }
+
+    footer a {
+      color: #6b8afd;
+      text-decoration: none;
+    }
+
+    footer a:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Bible Memory Plan Generator</h1>
+
+    <p class="intro">
+      Generate personalized day-by-day memorization plans for any book of the Bible.
+      Pick your book, start date, and pace — get a full schedule that prints beautifully
+      with repeating table headings on every page.
+    </p>
+
+    <div class="print-note">
+      <strong>💡 Printing & PDF:</strong> To save or print this plan as a PDF, use your
+      browser's Print function (Ctrl+P or Cmd+P) or the Print button in the widget.
+      The print layout includes repeating table headings on every page for clarity.
+    </div>
+
+    <div id="widget-mount" data-bible-memory-plan></div>
+
+    <div class="divider"></div>
+
+    <footer>
+      <p>
+        <strong>Bible Memory Plan Generator</strong> —
+        <a href="https://github.com/Jeeves-and-Company/ghost_bible_memory_plan_generator">GitHub</a>
+      </p>
+      <p style="margin-top: 0.5rem; font-size: 0.8em;">
+        Built for Ghost blogs with KJV Bible versification. Zero dependencies, MIT licensed.
+      </p>
+    </footer>
+  </div>
+
+  <!-- Load the widget bundle -->
+  <script src="./bible-memory-plan.min.js" defer></script>
+</body>
+</html>
