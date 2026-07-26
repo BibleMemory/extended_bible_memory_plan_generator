@@ -158,7 +158,6 @@
   margin: 0 0 1.5em;
 }
 
-.bmp-print,
 .bmp-download {
   padding: 0.5em 1.25em;
   border: 1px solid #2a2a2a;
@@ -171,7 +170,6 @@
   cursor: pointer;
 }
 
-.bmp-print:hover,
 .bmp-download:hover {
   background: #2a2a2a;
   color: #fff;

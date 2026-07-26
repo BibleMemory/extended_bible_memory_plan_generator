@@ -149,15 +149,11 @@ export function renderPlan(container, plan, options = {}) {
 
   const actions = document.createElement('div');
   actions.className = 'bmp-actions';
-  const printButton = document.createElement('button');
-  printButton.type = 'button';
-  printButton.className = 'bmp-print';
-  printButton.textContent = 'Print';
-  printButton.addEventListener('click', () => window.print());
-  actions.appendChild(printButton);
 
   // Client-generated PDF: pagination is ours, so table headings repeat on
-  // every page even where the browser's print engine won't (Safari).
+  // every page even where the browser's print engine won't (WebKit, mobile).
+  // This is the only offered action — browser printing still works via the
+  // browser's own menu, but the PDF is the reliable path everywhere.
   const pdfButton = document.createElement('button');
   pdfButton.type = 'button';
   pdfButton.className = 'bmp-download';
