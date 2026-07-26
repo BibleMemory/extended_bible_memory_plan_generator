@@ -130,7 +130,7 @@ The widget finds any `[data-bible-memory-plan]` element and mounts idempotently,
 
 ## License
 
-MIT. Copyright 2026 Jeeves and Company.
+MIT. Copyright 2026 BibleMemory.
 
 See `LICENSE` for full text.
 
