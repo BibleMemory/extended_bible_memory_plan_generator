@@ -3,12 +3,33 @@
 // the DOM: date formatting and the row -> cell-data transform.
 
 import { describe, it, expect } from 'vitest';
-import { formatPlanDate, formatPlanDateWithYear, formatLongDate, rowToCells } from '../src/ui/render.js';
+import { formatPlanDate, formatPlanDateWithYear, formatLongDate, rowToCells, yearBreakIndices } from '../src/ui/render.js';
 
 describe('formatPlanDateWithYear', () => {
   it('appends the year to the abbreviated date', () => {
     expect(formatPlanDateWithYear(new Date(2026, 6, 27))).toBe('Jul. 27, 2026');
     expect(formatPlanDateWithYear(new Date(2027, 4, 15))).toBe('May 15, 2027');
+  });
+});
+
+describe('yearBreakIndices', () => {
+  const row = (y, m, d) => ({ date: new Date(y, m, d) });
+
+  it('is empty for a single-year plan (and never flags row 0)', () => {
+    expect(yearBreakIndices([row(2026, 0, 1), row(2026, 0, 2), row(2026, 11, 31)]).size).toBe(0);
+    expect(yearBreakIndices([]).size).toBe(0);
+  });
+
+  it('flags the first row of each new year', () => {
+    const rows = [
+      row(2026, 11, 30), // 0
+      row(2026, 11, 31), // 1
+      row(2027, 0, 1),   // 2 <- break
+      row(2027, 0, 2),   // 3
+      row(2028, 0, 1),   // 4 <- break
+    ];
+    const breaks = yearBreakIndices(rows);
+    expect([...breaks].sort()).toEqual([2, 4]);
   });
 });
 

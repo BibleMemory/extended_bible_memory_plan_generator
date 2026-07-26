@@ -237,6 +237,13 @@
   color: #888;
 }
 
+/* Small year marker under the date on the first row of each new year. */
+.bmp-date-year {
+  display: block;
+  font-size: 0.8em;
+  color: #777;
+}
+
 /* ---------------------------------------------------------------------
    Responsive
    --------------------------------------------------------------------- */

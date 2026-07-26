@@ -25,6 +25,21 @@ export function formatPlanDateWithYear(date) {
   return `${formatPlanDate(date)}, ${date.getFullYear()}`;
 }
 
+/**
+ * Indices of rows that start a new calendar year (row 0 excluded — the
+ * subtitle already states the start year). The on-screen table annotates
+ * these rows with a small year label so multi-year plans stay unambiguous.
+ */
+export function yearBreakIndices(rows) {
+  const breaks = new Set();
+  for (let i = 1; i < rows.length; i++) {
+    if (rows[i].date.getFullYear() !== rows[i - 1].date.getFullYear()) {
+      breaks.add(i);
+    }
+  }
+  return breaks;
+}
+
 /** Format a Date as "January 1, 2026". */
 export function formatLongDate(date) {
   return `${MONTH_FULL[date.getMonth()]} ${date.getDate()}, ${date.getFullYear()}`;
@@ -100,20 +115,28 @@ function buildTable(plan) {
   table.appendChild(thead);
 
   const tbody = document.createElement('tbody');
-  for (const row of plan.rows) {
+  const yearBreaks = yearBreakIndices(plan.rows);
+  for (const [i, row] of plan.rows.entries()) {
     const cells = rowToCells(row);
     const tr = document.createElement('tr');
+    const dateCell = td(cells.date);
+    if (yearBreaks.has(i)) {
+      const yearLabel = document.createElement('span');
+      yearLabel.className = 'bmp-date-year';
+      yearLabel.textContent = String(row.date.getFullYear());
+      dateCell.appendChild(yearLabel);
+    }
     if (cells.off) {
       tr.className = 'bmp-off';
       tr.appendChild(td(String(cells.day)));
-      tr.appendChild(td(cells.date));
+      tr.appendChild(dateCell);
       const offCell = document.createElement('td');
       offCell.colSpan = 3;
       offCell.textContent = 'Day off';
       tr.appendChild(offCell);
     } else {
       tr.appendChild(td(String(cells.day)));
-      tr.appendChild(td(cells.date));
+      tr.appendChild(dateCell);
       tr.appendChild(td(cells.today));
       tr.appendChild(td(cells.previous));
       tr.appendChild(td(cells.review));
