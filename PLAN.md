@@ -20,7 +20,7 @@ every printed page.
 | Book of the Bible | `<select>` — all 66 books, standard English Bible order | **Ephesians** |
 | Start date | date picker | today's date |
 | Verses per day | number input (min 1) | **1** |
-| Days per week | number input (1–7) | **6** |
+| Days per week | select (5–7) | **6** |
 
 ### Beginner callout
 

@@ -92,13 +92,15 @@ export function buildForm(container, onGenerate) {
   dpwField.className = 'bmp-field';
   const dpwLabel = document.createElement('label');
   dpwLabel.textContent = 'Days per week';
-  const dpwInput = document.createElement('input');
-  dpwInput.type = 'number';
-  dpwInput.min = '1';
-  dpwInput.max = '7';
-  dpwInput.step = '1';
+  const dpwInput = document.createElement('select');
   dpwInput.className = 'bmp-dpw';
-  dpwInput.value = String(DEFAULT_DAYS_PER_WEEK);
+  for (let days = 5; days <= 7; days++) {
+    const option = document.createElement('option');
+    option.value = String(days);
+    option.textContent = String(days);
+    if (days === DEFAULT_DAYS_PER_WEEK) option.selected = true;
+    dpwInput.appendChild(option);
+  }
   dpwLabel.appendChild(dpwInput);
   dpwField.appendChild(dpwLabel);
 
@@ -136,7 +138,7 @@ export function buildForm(container, onGenerate) {
       ? parseLocalDateInput(dateInput.value)
       : new Date();
     const versesPerDay = clampInt(vpdInput.value, 1, undefined, DEFAULT_VERSES_PER_DAY);
-    const daysPerWeek = clampInt(dpwInput.value, 1, 7, DEFAULT_DAYS_PER_WEEK);
+    const daysPerWeek = clampInt(dpwInput.value, 5, 7, DEFAULT_DAYS_PER_WEEK);
 
     onGenerate({ book, startDate, versesPerDay, daysPerWeek });
   });

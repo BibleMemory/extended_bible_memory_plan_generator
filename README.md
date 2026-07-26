@@ -5,7 +5,7 @@ A self-contained JavaScript widget that generates personalized day-by-day Bible 
 ## Features
 
 - **66 books** of the Bible (KJV versification)
-- **Customizable inputs:** book selection, start date, verses/day (1+), days/week (1–7)
+- **Customizable inputs:** book selection, start date, verses/day (1+), days/week (select, 5–7)
 - **Smart scheduling:** automatic day-off rows, cumulative verse review notation, previous-verse tracking
 - **Print-ready:** printing outputs only the plan (title and table) — surrounding page content is hidden — with repeating table headings on every page and clean black-on-white output. Headings repeat in Chrome, Edge, and Firefox; Safari prints them only once (a WebKit print limitation). Print-only-the-plan requires a browser with CSS `:has()` (all modern browsers); older browsers print the full page.
 - **Beginner callout:** advisory for books over 160 verses
