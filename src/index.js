@@ -21,9 +21,9 @@ function mount(host) {
 
   let lastOptions = { versesPerDay: 1, daysPerWeek: 6 };
 
-  buildForm(widget, ({ book, startDate, versesPerDay, daysPerWeek }) => {
+  buildForm(widget, ({ book, startDate, versesPerDay, daysPerWeek, chapter }) => {
     lastOptions = { versesPerDay, daysPerWeek };
-    const plan = generateSchedule({ book, startDate, versesPerDay, daysPerWeek });
+    const plan = generateSchedule({ book, startDate, versesPerDay, daysPerWeek, chapter });
     renderPlan(widget, plan, lastOptions);
   });
 

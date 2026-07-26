@@ -18,6 +18,7 @@ every printed page.
 | Field | Control | Default |
 |---|---|---|
 | Book of the Bible | `<select>` — all 66 books, standard English Bible order | **Ephesians** |
+| Chapter | `<select>` — "All" + 1..N for the selected book; repopulated on book change. A single chapter scopes the plan to that chapter and titles it "Book N Memorization Plan" | **All** |
 | Start date | date picker | today's date |
 | Verses per day | number input (min 1) | **1** |
 | Days per week | select (5–7) | **6** |

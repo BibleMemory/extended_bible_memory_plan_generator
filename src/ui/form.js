@@ -61,6 +61,35 @@ export function buildForm(container, onGenerate) {
   bookLabel.appendChild(bookSelect);
   bookField.appendChild(bookLabel);
 
+  // Chapter field — options depend on the selected book
+  const chapterField = document.createElement('div');
+  chapterField.className = 'bmp-field';
+  const chapterLabel = document.createElement('label');
+  chapterLabel.textContent = 'Chapter';
+  const chapterSelect = document.createElement('select');
+  chapterSelect.className = 'bmp-chapter';
+
+  function populateChapters() {
+    const book = getBook(bookSelect.value);
+    const count = book ? book.chapters.length : 0;
+    chapterSelect.innerHTML = '';
+    const allOption = document.createElement('option');
+    allOption.value = 'all';
+    allOption.textContent = 'All';
+    chapterSelect.appendChild(allOption);
+    for (let ch = 1; ch <= count; ch++) {
+      const option = document.createElement('option');
+      option.value = String(ch);
+      option.textContent = String(ch);
+      chapterSelect.appendChild(option);
+    }
+    chapterSelect.value = 'all';
+  }
+
+  populateChapters();
+  chapterLabel.appendChild(chapterSelect);
+  chapterField.appendChild(chapterLabel);
+
   // Start date field
   const dateField = document.createElement('div');
   dateField.className = 'bmp-field';
@@ -110,6 +139,7 @@ export function buildForm(container, onGenerate) {
   generateButton.textContent = 'Generate plan';
 
   form.appendChild(bookField);
+  form.appendChild(chapterField);
   form.appendChild(dateField);
   form.appendChild(vpdField);
   form.appendChild(dpwField);
@@ -121,13 +151,28 @@ export function buildForm(container, onGenerate) {
   callout.textContent = CALLOUT_TEXT;
   callout.hidden = true;
 
+  function selectedChapter() {
+    return chapterSelect.value === 'all' ? null : parseInt(chapterSelect.value, 10);
+  }
+
   function updateCallout() {
     const book = getBook(bookSelect.value);
-    const verses = book ? totalVerses(book) : 0;
+    const chapter = selectedChapter();
+    // The advisory reflects what will actually be memorized: the whole
+    // book, or just the selected chapter's verses.
+    const verses = !book
+      ? 0
+      : chapter === null
+        ? totalVerses(book)
+        : book.chapters[chapter - 1];
     callout.hidden = !(verses > CALLOUT_VERSE_THRESHOLD);
   }
 
-  bookSelect.addEventListener('change', updateCallout);
+  bookSelect.addEventListener('change', () => {
+    populateChapters();
+    updateCallout();
+  });
+  chapterSelect.addEventListener('change', updateCallout);
   updateCallout();
 
   form.addEventListener('submit', (event) => {
@@ -139,12 +184,13 @@ export function buildForm(container, onGenerate) {
       : new Date();
     const versesPerDay = clampInt(vpdInput.value, 1, undefined, DEFAULT_VERSES_PER_DAY);
     const daysPerWeek = clampInt(dpwInput.value, 5, 7, DEFAULT_DAYS_PER_WEEK);
+    const chapter = selectedChapter();
 
-    onGenerate({ book, startDate, versesPerDay, daysPerWeek });
+    onGenerate({ book, startDate, versesPerDay, daysPerWeek, chapter });
   });
 
   container.appendChild(form);
   container.appendChild(callout);
 
-  return { form, callout, bookSelect, dateInput, vpdInput, dpwInput, generateButton };
+  return { form, callout, bookSelect, chapterSelect, dateInput, vpdInput, dpwInput, generateButton };
 }

@@ -14,7 +14,7 @@ function addDays(date, days) {
   return new Date(date.getFullYear(), date.getMonth(), date.getDate() + days);
 }
 
-function validateInputs({ book, startDate, versesPerDay, daysPerWeek }) {
+function validateInputs({ book, startDate, versesPerDay, daysPerWeek, chapter }) {
   if (!book || typeof book !== 'object' || typeof book.name !== 'string' || !book.name) {
     throw new TypeError('book must be an object with a non-empty string `name`');
   }
@@ -34,19 +34,37 @@ function validateInputs({ book, startDate, versesPerDay, daysPerWeek }) {
   if (!Number.isInteger(daysPerWeek) || daysPerWeek < 1 || daysPerWeek > 7) {
     throw new TypeError('daysPerWeek must be an integer between 1 and 7');
   }
+  if (
+    chapter !== null &&
+    (!Number.isInteger(chapter) || chapter < 1 || chapter > book.chapters.length)
+  ) {
+    throw new TypeError(
+      `chapter must be null or an integer between 1 and ${book.chapters.length}`
+    );
+  }
 }
 
 /**
- * Generate a day-by-day memorization schedule for a book of the Bible.
+ * Generate a day-by-day memorization schedule for a book of the Bible, or
+ * for a single chapter of it when `chapter` is given (1-based; null = whole
+ * book).
  *
- * @param {{book: {name: string, chapters: number[]}, startDate: Date, versesPerDay?: number, daysPerWeek?: number}} opts
+ * @param {{book: {name: string, chapters: number[]}, startDate: Date, versesPerDay?: number, daysPerWeek?: number, chapter?: number|null}} opts
  * @returns {{title: string, rows: object[], totalDays: number, totalVerses: number, warning: boolean}}
  */
-export function generateSchedule({ book, startDate, versesPerDay = 1, daysPerWeek = 6 }) {
-  validateInputs({ book, startDate, versesPerDay, daysPerWeek });
+export function generateSchedule({ book, startDate, versesPerDay = 1, daysPerWeek = 6, chapter = null }) {
+  validateInputs({ book, startDate, versesPerDay, daysPerWeek, chapter });
 
   const { chapters } = book;
-  const totalVerses = chapters.reduce((sum, n) => sum + n, 0);
+  // For a single-chapter plan, verse indices are offset to the chapter's
+  // start so refFromIndex still yields real chapter:verse references, and
+  // the cumulative review starts at that chapter's first verse.
+  const baseIndex =
+    chapter === null ? 0 : chapters.slice(0, chapter - 1).reduce((sum, n) => sum + n, 0);
+  const totalVerses = chapter === null
+    ? chapters.reduce((sum, n) => sum + n, 0)
+    : chapters[chapter - 1];
+  const reviewStart = chapter === null ? { chapter: 1, verse: 1 } : { chapter, verse: 1 };
   const warning = totalVerses > WARNING_VERSE_THRESHOLD;
 
   const rows = [];
@@ -72,8 +90,8 @@ export function generateSchedule({ book, startDate, versesPerDay = 1, daysPerWee
 
     const startIdx = verseIndex;
     const endIdx = Math.min(verseIndex + versesPerDay, totalVerses) - 1; // last day may take fewer verses
-    const todayStart = refFromIndex(chapters, startIdx);
-    const todayEnd = refFromIndex(chapters, endIdx);
+    const todayStart = refFromIndex(chapters, baseIndex + startIdx);
+    const todayEnd = refFromIndex(chapters, baseIndex + endIdx);
     const today = formatRange(todayStart, todayEnd);
 
     const isFirstWorkDay = previousToday === null;
@@ -83,7 +101,7 @@ export function generateSchedule({ book, startDate, versesPerDay = 1, daysPerWee
     // against the published Appendix 2 table: day 2 is today "1:2" / review
     // "1:1–2", day 8 is today "1:7" / review "1:1–7" — both end at today's
     // verse, not the previous work day's.
-    const review = isFirstWorkDay ? 'N/A' : formatRange({ chapter: 1, verse: 1 }, todayEnd);
+    const review = isFirstWorkDay ? 'N/A' : formatRange(reviewStart, todayEnd);
 
     rows.push({ day, date, off: false, today, previous, review });
 
@@ -92,7 +110,9 @@ export function generateSchedule({ book, startDate, versesPerDay = 1, daysPerWee
   }
 
   return {
-    title: `${book.name} Memorization Plan`,
+    title: chapter === null
+      ? `${book.name} Memorization Plan`
+      : `${book.name} ${chapter} Memorization Plan`,
     rows,
     totalDays: rows.length,
     totalVerses,
