@@ -290,7 +290,8 @@
     font-size: 1.4em;
   }
 
-  .bmp-subtitle {
+  .bmp-subtitle,
+  .bmp-estimates {
     font-size: 0.85em;
   }
 
