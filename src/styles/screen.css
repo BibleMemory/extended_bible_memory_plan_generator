@@ -251,6 +251,33 @@
   color: #888;
 }
 
+/* Per-day checkbox: a drawn square (not an emoji or native input) so it
+   renders and prints identically everywhere. Clickable on screen. */
+.bmp-check {
+  display: inline-block;
+  width: 0.9em;
+  height: 0.9em;
+  border: 1.5px solid #555;
+  border-radius: 2px;
+  vertical-align: middle;
+  cursor: pointer;
+  line-height: 0.9em;
+  text-align: center;
+}
+
+.bmp-check[aria-checked='true']::after {
+  content: '✓';
+  display: block;
+  font-size: 0.85em;
+  font-weight: 700;
+  color: #2a2a2a;
+}
+
+.bmp-check:focus-visible {
+  outline: 2px solid #6b8afd;
+  outline-offset: 1px;
+}
+
 /* Full-width banner row marking the start of a new calendar year.
    (Selector outweighs `.bmp-table tbody td`'s color rule.) */
 .bmp-table tbody tr.bmp-year-row td {

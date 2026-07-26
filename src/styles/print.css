@@ -146,6 +146,12 @@
     font-style: italic;
   }
 
+  /* Checkboxes print as crisp black squares; a checked one keeps its ✓. */
+  .bmp-widget .bmp-check {
+    border: 1pt solid #000;
+    border-radius: 0;
+  }
+
   /* Backgrounds are stripped in print, so the year banner becomes a
      bold ruled divider instead. */
   .bmp-widget .bmp-year-row td {

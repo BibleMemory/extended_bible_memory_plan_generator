@@ -98,6 +98,7 @@ const fmt = (n) => (Number.isInteger(n) ? String(n) : n.toFixed(2));
  *     textCentered(str, cx, y, font, size) centered on cx
  *     textRight(str, rx, y, font, size)    right edge at rx
  *     hline(x1, x2, y, lineWidth, gray)    horizontal rule (gray 0=black..1=white)
+ *     rect(x, y, w, h, lineWidth, gray)    stroked rectangle (x,y = bottom-left)
  *   finish() → Uint8Array of the complete file.
  */
 export function createPdf({ pageWidth, pageHeight }) {
@@ -122,6 +123,12 @@ export function createPdf({ pageWidth, pageHeight }) {
       hline(x1, x2, y, lineWidth, gray = 0) {
         ops.push(
           `${fmt(gray)} G ${fmt(lineWidth)} w ${fmt(x1)} ${fmt(y)} m ${fmt(x2)} ${fmt(y)} l S`
+        );
+        return page;
+      },
+      rect(x, y, w, h, lineWidth, gray = 0) {
+        ops.push(
+          `${fmt(gray)} G ${fmt(lineWidth)} w ${fmt(x)} ${fmt(y)} ${fmt(w)} ${fmt(h)} re S`
         );
         return page;
       },

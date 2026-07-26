@@ -115,6 +115,11 @@ function buildTable(plan) {
 
   const thead = document.createElement('thead');
   const headRow = document.createElement('tr');
+  const checkTh = document.createElement('th');
+  checkTh.scope = 'col';
+  checkTh.className = 'bmp-check-col';
+  checkTh.setAttribute('aria-label', 'Completed');
+  headRow.appendChild(checkTh);
   headRow.appendChild(th('Day #'));
   headRow.appendChild(th('Date'));
   headRow.appendChild(th("Today's verse", '(10 times)'));
@@ -130,7 +135,7 @@ function buildTable(plan) {
       const yearRow = document.createElement('tr');
       yearRow.className = 'bmp-year-row';
       const yearCell = document.createElement('td');
-      yearCell.colSpan = 5;
+      yearCell.colSpan = 6;
       yearCell.textContent = String(row.date.getFullYear());
       yearRow.appendChild(yearCell);
       tbody.appendChild(yearRow);
@@ -139,6 +144,7 @@ function buildTable(plan) {
     const tr = document.createElement('tr');
     if (cells.off) {
       tr.className = 'bmp-off';
+      tr.appendChild(td('')); // no checkbox on off days
       tr.appendChild(td(String(cells.day)));
       tr.appendChild(td(cells.date));
       const offCell = document.createElement('td');
@@ -146,6 +152,26 @@ function buildTable(plan) {
       offCell.textContent = 'Day off';
       tr.appendChild(offCell);
     } else {
+      const checkCell = document.createElement('td');
+      const check = document.createElement('span');
+      check.className = 'bmp-check';
+      check.setAttribute('role', 'checkbox');
+      check.setAttribute('aria-checked', 'false');
+      check.setAttribute('aria-label', `Day ${cells.day} completed`);
+      check.tabIndex = 0;
+      const toggle = () => {
+        const on = check.getAttribute('aria-checked') === 'true';
+        check.setAttribute('aria-checked', on ? 'false' : 'true');
+      };
+      check.addEventListener('click', toggle);
+      check.addEventListener('keydown', (event) => {
+        if (event.key === ' ' || event.key === 'Enter') {
+          event.preventDefault();
+          toggle();
+        }
+      });
+      checkCell.appendChild(check);
+      tr.appendChild(checkCell);
       tr.appendChild(td(String(cells.day)));
       tr.appendChild(td(cells.date));
       tr.appendChild(td(cells.today));

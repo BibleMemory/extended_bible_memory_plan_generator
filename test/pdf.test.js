@@ -134,6 +134,12 @@ describe('buildPlanPdf — Ephesians plan', () => {
     expect(all).toContain('(1:1\\2266:24) Tj'); // final cumulative review, en dash
   });
 
+  it('draws one checkbox per work day and none on off days', () => {
+    const all = streams.join('\n');
+    // 180 rows - 25 off days = 155 work days, one stroked square each.
+    expect([...all.matchAll(/ re S/g)].length).toBe(155);
+  });
+
   it('dates carry the year', () => {
     const all = streams.join('\n');
     expect(all).toContain('(Jan. 1, 2023) Tj'); // first row

@@ -27,10 +27,13 @@ const FOLIO_Y = 30;
 const BOTTOM_LIMIT = MARGIN; // rows must end above this
 
 // Column widths sum to the content width (504pt); each cell is centered
-// on its column, matching the print stylesheet.
-const COL_WIDTHS = [56, 84, 112, 112, 140];
+// on its column, matching the print stylesheet. The first column holds
+// the per-day checkbox and has no heading.
+const COL_WIDTHS = [24, 52, 82, 108, 108, 130];
+const CHECKBOX_SIZE = 9;
 
 const HEADINGS = [
+  { main: '' },
   { main: 'Day #' },
   { main: 'Date' },
   { main: "Today's verse", sub: '(10 times)' },
@@ -62,7 +65,9 @@ export function buildPlanPdf({ title, subtitle, estimates = [], rows }) {
   const centerX = PAGE.width / 2;
 
   // "Day off" is centered across the three verse columns.
-  const offSpanCenter = left + COL_WIDTHS[0] + COL_WIDTHS[1] + (COL_WIDTHS[2] + COL_WIDTHS[3] + COL_WIDTHS[4]) / 2;
+  const offSpanCenter =
+    left + COL_WIDTHS[0] + COL_WIDTHS[1] + COL_WIDTHS[2] +
+    (COL_WIDTHS[3] + COL_WIDTHS[4] + COL_WIDTHS[5]) / 2;
 
   let page = null;
   let pageCount = 0;
@@ -71,6 +76,7 @@ export function buildPlanPdf({ title, subtitle, estimates = [], rows }) {
   function drawHeader(headTop) {
     page.hline(left, right, headTop + 6, 1);
     for (const [i, h] of HEADINGS.entries()) {
+      if (!h.main) continue; // checkbox column has no heading
       page.textCentered(h.main, centers[i], headTop - HEAD_SIZE, 'F2', HEAD_SIZE);
       if (h.sub) {
         page.textCentered(h.sub, centers[i], headTop - HEAD_SIZE - HEAD_SUB_DROP, 'F1', HEAD_SUB_SIZE);
@@ -110,15 +116,16 @@ export function buildPlanPdf({ title, subtitle, estimates = [], rows }) {
     if (y - ROW_HEIGHT < BOTTOM_LIMIT) startPage();
     const baseline = y - ROW_BASELINE;
     if (row.off) {
-      page.textCentered(String(row.day), centers[0], baseline, 'F3', BODY_SIZE);
-      page.textCentered(row.date, centers[1], baseline, 'F3', BODY_SIZE);
+      page.textCentered(String(row.day), centers[1], baseline, 'F3', BODY_SIZE);
+      page.textCentered(row.date, centers[2], baseline, 'F3', BODY_SIZE);
       page.textCentered('Day off', offSpanCenter, baseline, 'F3', BODY_SIZE);
     } else {
-      page.textCentered(String(row.day), centers[0], baseline, 'F1', BODY_SIZE);
-      page.textCentered(row.date, centers[1], baseline, 'F1', BODY_SIZE);
-      page.textCentered(row.today, centers[2], baseline, 'F1', BODY_SIZE);
-      page.textCentered(row.previous, centers[3], baseline, 'F1', BODY_SIZE);
-      page.textCentered(row.review, centers[4], baseline, 'F1', BODY_SIZE);
+      page.rect(centers[0] - CHECKBOX_SIZE / 2, baseline - 1, CHECKBOX_SIZE, CHECKBOX_SIZE, 0.8);
+      page.textCentered(String(row.day), centers[1], baseline, 'F1', BODY_SIZE);
+      page.textCentered(row.date, centers[2], baseline, 'F1', BODY_SIZE);
+      page.textCentered(row.today, centers[3], baseline, 'F1', BODY_SIZE);
+      page.textCentered(row.previous, centers[4], baseline, 'F1', BODY_SIZE);
+      page.textCentered(row.review, centers[5], baseline, 'F1', BODY_SIZE);
     }
     y -= ROW_HEIGHT;
     page.hline(left, right, y, 0.4, 0.6);
