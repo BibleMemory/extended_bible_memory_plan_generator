@@ -27,8 +27,9 @@ export function formatPlanDateWithYear(date) {
 
 /**
  * Indices of rows that start a new calendar year (row 0 excluded — the
- * subtitle already states the start year). The on-screen table annotates
- * these rows with a small year label so multi-year plans stay unambiguous.
+ * subtitle already states the start year). The on-screen table inserts a
+ * full-width year banner row before each so multi-year plans stay
+ * unambiguous.
  */
 export function yearBreakIndices(rows) {
   const breaks = new Set();
@@ -117,26 +118,28 @@ function buildTable(plan) {
   const tbody = document.createElement('tbody');
   const yearBreaks = yearBreakIndices(plan.rows);
   for (const [i, row] of plan.rows.entries()) {
+    if (yearBreaks.has(i)) {
+      const yearRow = document.createElement('tr');
+      yearRow.className = 'bmp-year-row';
+      const yearCell = document.createElement('td');
+      yearCell.colSpan = 5;
+      yearCell.textContent = String(row.date.getFullYear());
+      yearRow.appendChild(yearCell);
+      tbody.appendChild(yearRow);
+    }
     const cells = rowToCells(row);
     const tr = document.createElement('tr');
-    const dateCell = td(cells.date);
-    if (yearBreaks.has(i)) {
-      const yearLabel = document.createElement('span');
-      yearLabel.className = 'bmp-date-year';
-      yearLabel.textContent = String(row.date.getFullYear());
-      dateCell.appendChild(yearLabel);
-    }
     if (cells.off) {
       tr.className = 'bmp-off';
       tr.appendChild(td(String(cells.day)));
-      tr.appendChild(dateCell);
+      tr.appendChild(td(cells.date));
       const offCell = document.createElement('td');
       offCell.colSpan = 3;
       offCell.textContent = 'Day off';
       tr.appendChild(offCell);
     } else {
       tr.appendChild(td(String(cells.day)));
-      tr.appendChild(dateCell);
+      tr.appendChild(td(cells.date));
       tr.appendChild(td(cells.today));
       tr.appendChild(td(cells.previous));
       tr.appendChild(td(cells.review));

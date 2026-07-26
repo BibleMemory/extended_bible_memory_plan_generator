@@ -136,4 +136,12 @@
   .bmp-widget .bmp-off td {
     font-style: italic;
   }
+
+  /* Backgrounds are stripped in print, so the year banner becomes a
+     bold ruled divider instead. */
+  .bmp-widget .bmp-year-row td {
+    font-weight: 700;
+    border-top: 1pt solid #000;
+    border-bottom: 1pt solid #000;
+  }
 }

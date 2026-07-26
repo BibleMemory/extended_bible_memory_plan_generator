@@ -237,11 +237,16 @@
   color: #888;
 }
 
-/* Small year marker under the date on the first row of each new year. */
-.bmp-date-year {
-  display: block;
-  font-size: 0.8em;
-  color: #777;
+/* Full-width banner row marking the start of a new calendar year.
+   (Selector outweighs `.bmp-table tbody td`'s color rule.) */
+.bmp-table tbody tr.bmp-year-row td {
+  padding: 0.4em 1em;
+  background: #2a2a2a;
+  color: #fff;
+  text-align: center;
+  font-weight: 600;
+  font-size: 0.9em;
+  letter-spacing: 0.06em;
 }
 
 /* ---------------------------------------------------------------------
@@ -433,5 +438,13 @@
 
   .bmp-widget .bmp-off td {
     font-style: italic;
+  }
+
+  /* Backgrounds are stripped in print, so the year banner becomes a
+     bold ruled divider instead. */
+  .bmp-widget .bmp-year-row td {
+    font-weight: 700;
+    border-top: 1pt solid #000;
+    border-bottom: 1pt solid #000;
   }
 }
