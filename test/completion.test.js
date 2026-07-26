@@ -43,8 +43,8 @@ describe('completion estimates', () => {
 
   it('formats the header lines exactly', () => {
     expect(buildEstimateLines(plan)).toEqual([
-      'Estimated Completion Date (according to plan): June 29, 2023',
-      'Estimated Completion Date (with 10% padding): July 17, 2023',
+      'Estimated Completion (according to plan): June 29, 2023',
+      'Estimated Completion (with 10% padding): July 17, 2023',
     ]);
   });
 });

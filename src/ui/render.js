@@ -75,8 +75,8 @@ function pluralize(n, singular, plural = `${singular}s`) {
 /** The two completion-estimate lines shown in the plan header (HTML & PDF). */
 export function buildEstimateLines(plan) {
   return [
-    `Estimated Completion Date (according to plan): ${formatLongDate(plan.completionDate)}`,
-    `Estimated Completion Date (with 10% padding): ${formatLongDate(plan.paddedCompletionDate)}`,
+    `Estimated Completion (according to plan): ${formatLongDate(plan.completionDate)}`,
+    `Estimated Completion (with 10% padding): ${formatLongDate(plan.paddedCompletionDate)}`,
   ];
 }
 

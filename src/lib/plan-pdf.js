@@ -89,7 +89,9 @@ export function buildPlanPdf({ title, subtitle, estimates = [], rows }) {
       const titleY = PAGE.height - MARGIN - TITLE_SIZE;
       page.textCentered(title, centerX, titleY, 'F1', TITLE_SIZE);
       page.textCentered(subtitle, centerX, titleY - 20, 'F3', SUBTITLE_SIZE);
-      let y2 = titleY - 20;
+      // Extra half-line above the estimates, mirroring the on-screen gap
+      // between the subtitle and these lines.
+      let y2 = titleY - 20 - 8;
       for (const line of estimates) {
         y2 -= 16;
         page.textCentered(line, centerX, y2, 'F3', SUBTITLE_SIZE);
