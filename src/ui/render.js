@@ -72,6 +72,14 @@ function pluralize(n, singular, plural = `${singular}s`) {
   return n === 1 ? singular : plural;
 }
 
+/** The two completion-estimate lines shown in the plan header (HTML & PDF). */
+export function buildEstimateLines(plan) {
+  return [
+    `Estimated Completion Date (according to plan): ${formatLongDate(plan.completionDate)}`,
+    `Estimated Completion Date (with 10% padding): ${formatLongDate(plan.paddedCompletionDate)}`,
+  ];
+}
+
 function buildSubtitle(plan, { versesPerDay, daysPerWeek }) {
   const startDate = plan.rows.length > 0 ? plan.rows[0].date : new Date();
   const verseWord = pluralize(versesPerDay, 'verse');
@@ -178,6 +186,14 @@ export function renderPlan(container, plan, options = {}) {
   subtitle.className = 'bmp-subtitle';
   subtitle.textContent = buildSubtitle(plan, options);
 
+  const estimates = document.createElement('div');
+  estimates.className = 'bmp-estimates';
+  for (const line of buildEstimateLines(plan)) {
+    const p = document.createElement('p');
+    p.textContent = line;
+    estimates.appendChild(p);
+  }
+
   const actions = document.createElement('div');
   actions.className = 'bmp-actions';
 
@@ -193,6 +209,7 @@ export function renderPlan(container, plan, options = {}) {
     const { bytes, filename } = buildPlanPdf({
       title: plan.title,
       subtitle: buildSubtitle(plan, options),
+      estimates: buildEstimateLines(plan),
       rows: plan.rows.map((row) => ({
         ...rowToCells(row),
         date: formatPlanDateWithYear(row.date),
@@ -218,6 +235,7 @@ export function renderPlan(container, plan, options = {}) {
 
   section.appendChild(title);
   section.appendChild(subtitle);
+  section.appendChild(estimates);
   section.appendChild(actions);
   section.appendChild(tableWrap);
 

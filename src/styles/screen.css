@@ -151,6 +151,18 @@
   color: #777;
 }
 
+.bmp-estimates {
+  margin: 0 0 1.25em;
+  text-align: center;
+  font-family: Georgia, 'Times New Roman', Times, serif;
+  font-size: 0.9em;
+  color: #444;
+}
+
+.bmp-estimates p {
+  margin: 0.15em 0;
+}
+
 .bmp-actions {
   display: flex;
   justify-content: center;

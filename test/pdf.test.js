@@ -30,6 +30,10 @@ function buildEphesiansPdf() {
   return buildPlanPdf({
     title: plan.title,
     subtitle: 'Starting January 1, 2023 · 1 verse per day · 6 days per week',
+    estimates: [
+      'Estimated Completion Date (according to plan): June 29, 2023',
+      'Estimated Completion Date (with 10% padding): July 17, 2023',
+    ],
     rows: pdfRows(plan),
   });
 }
@@ -105,12 +109,15 @@ describe('buildPlanPdf — Ephesians plan', () => {
     }
   });
 
-  it('puts the title and subtitle on page 1 only', () => {
+  it('puts the title, subtitle, and estimates on page 1 only', () => {
     expect(streams[0]).toContain('(Ephesians Memorization Plan) Tj');
+    expect(streams[0]).toContain('1 verse per day');
+    expect(streams[0]).toContain('Estimated Completion Date \\(according to plan\\): June 29, 2023');
+    expect(streams[0]).toContain('Estimated Completion Date \\(with 10% padding\\): July 17, 2023');
     for (const stream of streams.slice(1)) {
       expect(stream).not.toContain('(Ephesians Memorization Plan) Tj');
+      expect(stream).not.toContain('Estimated Completion');
     }
-    expect(streams[0]).toContain('1 verse per day');
   });
 
   it('numbers the pages 1..N', () => {

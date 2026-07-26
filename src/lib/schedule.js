@@ -109,6 +109,13 @@ export function generateSchedule({ book, startDate, versesPerDay = 1, daysPerWee
     verseIndex = endIdx + 1;
   }
 
+  // Completion estimates: "on plan" is simply the last work day's date;
+  // "padded" allows 10% calendar slippage on the whole span.
+  const completionDate = rows[rows.length - 1].date;
+  // Integer math: rows.length * 1.1 in floats overshoots (180·1.1 →
+  // 198.00000000000003, ceil → 199), so scale by 11/10 exactly.
+  const paddedCompletionDate = addDays(startDate, Math.ceil((rows.length * 11) / 10) - 1);
+
   return {
     title: chapter === null
       ? `${book.name} Memorization Plan`
@@ -117,5 +124,7 @@ export function generateSchedule({ book, startDate, versesPerDay = 1, daysPerWee
     totalDays: rows.length,
     totalVerses,
     warning,
+    completionDate,
+    paddedCompletionDate,
   };
 }

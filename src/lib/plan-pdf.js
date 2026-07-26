@@ -13,6 +13,7 @@ const MARGIN = 54; // 0.75"
 
 const TITLE_SIZE = 18;
 const SUBTITLE_SIZE = 11;
+const ESTIMATE_SIZE = 10;
 const HEAD_SIZE = 10;
 const HEAD_SUB_SIZE = 8;
 const BODY_SIZE = 10;
@@ -51,10 +52,10 @@ function columnCenters() {
 /**
  * Build the PDF for a plan.
  *
- * @param {{title: string, subtitle: string, rows: ReturnType<rowToCells>[]}} data
+ * @param {{title: string, subtitle: string, estimates?: string[], rows: ReturnType<rowToCells>[]}} data
  * @returns {{bytes: Uint8Array, filename: string, pageCount: number}}
  */
-export function buildPlanPdf({ title, subtitle, rows }) {
+export function buildPlanPdf({ title, subtitle, estimates = [], rows }) {
   const doc = createPdf({ pageWidth: PAGE.width, pageHeight: PAGE.height });
   const centers = columnCenters();
   const left = MARGIN;
@@ -89,7 +90,12 @@ export function buildPlanPdf({ title, subtitle, rows }) {
       const titleY = PAGE.height - MARGIN - TITLE_SIZE;
       page.textCentered(title, centerX, titleY, 'F1', TITLE_SIZE);
       page.textCentered(subtitle, centerX, titleY - 20, 'F3', SUBTITLE_SIZE);
-      headTop = titleY - 48;
+      let y2 = titleY - 20;
+      for (const line of estimates) {
+        y2 -= 16;
+        page.textCentered(line, centerX, y2, 'F1', ESTIMATE_SIZE);
+      }
+      headTop = y2 - 28;
     } else {
       headTop = PAGE.height - MARGIN;
     }

@@ -93,6 +93,14 @@
     page-break-after: avoid;
   }
 
+  .bmp-widget .bmp-estimates {
+    margin: 0 0 0.8em;
+    font-size: 10pt;
+    text-align: center;
+    break-after: avoid;
+    page-break-after: avoid;
+  }
+
   .bmp-widget .bmp-table {
     width: auto;
     margin: 0 auto;
