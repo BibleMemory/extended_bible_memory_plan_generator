@@ -115,6 +115,27 @@ All schedule computation happens in the browser. No Ghost Admin API, no
 Content API, no backend — which also means nothing breaks across Ghost minor
 versions.
 
+### Serving the bundle directly from this GitHub repo
+
+Both the source (`src/`) and the built bundle (`dist/`) are committed, so the
+repo is the only host needed. Raw `raw.githubusercontent.com` links **cannot**
+be used in `<script>`/`<link>` tags (GitHub serves them as `text/plain` with
+`nosniff`, so browsers refuse them). Instead:
+
+1. **jsDelivr (primary).** jsDelivr serves public GitHub repos with correct
+   MIME types and CDN caching. The HTML-card snippet references a
+   release-tag-pinned URL:
+   `https://cdn.jsdelivr.net/gh/Jeeves-and-Company/ghost_bible_memory_plan_generator@v1.0.0/dist/bible-memory-plan.min.js`
+   Pinning to a tag means published blog pages never change out from under
+   the owner; upgrading is editing the version in the snippet.
+2. **GitHub Pages (alternative + live demo).** A GitHub Actions workflow
+   publishes `dist/` plus a demo `index.html` to Pages. This provides a
+   second stable URL with proper content types and a public demo page for
+   testing the widget (including print output) without a Ghost install.
+
+Requirement for both: the repo must be public. Each release is a git tag +
+GitHub Release containing the rebuilt `dist/` files.
+
 ---
 
 ## 4. Architecture
@@ -215,8 +236,10 @@ Screen styles scoped under `.bmp-widget` (survive any Ghost theme);
 `break-inside: avoid`, hidden chrome, sensible margins.
 
 **Phase 5 — Packaging (agent 6).**
-Single-file IIFE bundle in `dist/`, HTML-card snippet, optional `.hbs`
-template, README with both install paths (Ghost(Pro)-compatible).
+Single-file IIFE bundle in `dist/` (committed to the repo), HTML-card snippet
+using the jsDelivr tag-pinned URL, optional `.hbs` template, GitHub Pages
+workflow (`.github/workflows/pages.yml`) publishing `dist/` + a demo page,
+README with both install paths (Ghost(Pro)-compatible).
 
 **Phase 6 — QA (agent 7, then coordinator).**
 - `vitest` suite green, golden fixture exact.
@@ -255,3 +278,6 @@ template, README with both install paths (Ghost(Pro)-compatible).
 - [ ] Widget renders correctly inside a stock Ghost 6 theme (Source) via an
       HTML card, with no style bleed either direction.
 - [ ] Zero runtime dependencies; single `<script>` install.
+- [ ] Bundle loads successfully from the jsDelivr URL for a tagged release
+      (served from this GitHub repo — no separate hosting), and the GitHub
+      Pages demo renders the widget.
