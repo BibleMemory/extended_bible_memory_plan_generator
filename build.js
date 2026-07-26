@@ -30,7 +30,7 @@ const cssInjectionCode = `
 // Banner with version and repo info
 const banner = `/*!
  * ${pkg.name} v${pkg.version}
- * https://github.com/BibleMemory/ghost_bible_memory_plan_generator
+ * https://github.com/BibleMemory/extended_bible_memory_plan_generator
  */
 `;
 

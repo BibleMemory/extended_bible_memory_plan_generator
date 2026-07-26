@@ -127,7 +127,7 @@ be used in `<script>`/`<link>` tags (GitHub serves them as `text/plain` with
 1. **jsDelivr (primary).** jsDelivr serves public GitHub repos with correct
    MIME types and CDN caching. The HTML-card snippet references a
    release-tag-pinned URL:
-   `https://cdn.jsdelivr.net/gh/BibleMemory/ghost_bible_memory_plan_generator@v1.0.0/dist/bible-memory-plan.min.js`
+   `https://cdn.jsdelivr.net/gh/BibleMemory/extended_bible_memory_plan_generator@v1.0.0/dist/bible-memory-plan.min.js`
    Pinning to a tag means published blog pages never change out from under
    the owner; upgrading is editing the version in the snippet.
 2. **GitHub Pages (alternative + live demo).** A GitHub Actions workflow
@@ -143,7 +143,7 @@ GitHub Release containing the rebuilt `dist/` files.
 ## 4. Architecture
 
 ```
-ghost_bible_memory_plan_generator/
+extended_bible_memory_plan_generator/
 ├── PLAN.md                     ← this file
 ├── README.md                   ← install instructions (HTML card + theme template)
 ├── src/
