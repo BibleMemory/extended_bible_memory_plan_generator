@@ -1,6 +1,6 @@
 {
   "name": "bible-memory-plan-generator",
-  "version": "1.6.0",
+  "version": "1.6.1",
   "description": "Bible memory plan generator widget for Ghost 6 blogs — day-by-day schedules for memorizing whole books of the Bible",
   "type": "module",
   "license": "MIT",
