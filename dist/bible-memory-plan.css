@@ -123,8 +123,14 @@
    Plan: title, subtitle, actions
    --------------------------------------------------------------------- */
 
+/* The plan renders on its own white "paper" card so it stays a legible
+   book page on any host theme, dark themes included. */
 .bmp-plan:not([hidden]) {
   margin-top: 1em;
+  padding: 1.5em 1.25em 1.75em;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  background: #fff;
 }
 
 .bmp-title {
@@ -233,6 +239,10 @@
     gap: 0.85em 1em;
   }
 
+  .bmp-plan:not([hidden]) {
+    padding: 1em 0.5em 1.25em;
+  }
+
   .bmp-field {
     min-width: 45%;
     flex: 1 1 45%;
@@ -320,6 +330,13 @@
 
   body:has(.bmp-plan:not([hidden])) .bmp-plan {
     margin: 0 !important;
+    padding: 0 !important;
+  }
+
+  /* The on-screen "paper card" chrome has no place on actual paper. */
+  .bmp-widget .bmp-plan {
+    border: 0 !important;
+    border-radius: 0 !important;
     padding: 0 !important;
   }
 

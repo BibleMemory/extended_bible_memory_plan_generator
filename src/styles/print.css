@@ -50,6 +50,13 @@
     padding: 0 !important;
   }
 
+  /* The on-screen "paper card" chrome has no place on actual paper. */
+  .bmp-widget .bmp-plan {
+    border: 0 !important;
+    border-radius: 0 !important;
+    padding: 0 !important;
+  }
+
   .bmp-widget {
     color: #000;
     background: #fff;

@@ -123,8 +123,14 @@
    Plan: title, subtitle, actions
    --------------------------------------------------------------------- */
 
+/* The plan renders on its own white "paper" card so it stays a legible
+   book page on any host theme, dark themes included. */
 .bmp-plan:not([hidden]) {
   margin-top: 1em;
+  padding: 1.5em 1.25em 1.75em;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  background: #fff;
 }
 
 .bmp-title {
@@ -231,6 +237,10 @@
   .bmp-form {
     padding: 1em;
     gap: 0.85em 1em;
+  }
+
+  .bmp-plan:not([hidden]) {
+    padding: 1em 0.5em 1.25em;
   }
 
   .bmp-field {
