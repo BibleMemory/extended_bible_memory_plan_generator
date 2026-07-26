@@ -79,6 +79,26 @@
     footer a:hover {
       text-decoration: underline;
     }
+
+    /* Print only the plan. The widget's own print styles handle this in
+       browsers with :has(); this block is the fallback for the demo page. */
+    @media print {
+      h1, .intro, .print-note, .divider, footer {
+        display: none !important;
+      }
+
+      body {
+        padding: 0;
+        background: #fff;
+      }
+
+      .container {
+        max-width: none;
+        padding: 0;
+        border-radius: 0;
+        box-shadow: none;
+      }
+    }
   </style>
 </head>
 <body>
@@ -94,7 +114,8 @@
     <div class="print-note">
       <strong>💡 Printing & PDF:</strong> To save or print this plan as a PDF, use your
       browser's Print function (Ctrl+P or Cmd+P) or the Print button in the widget.
-      The print layout includes repeating table headings on every page for clarity.
+      Only the plan itself is printed. In Chrome, Edge, and Firefox the table headings
+      repeat on every page; Safari prints them only once (a browser limitation).
     </div>
 
     <div id="widget-mount" data-bible-memory-plan></div>

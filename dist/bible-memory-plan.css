@@ -287,6 +287,42 @@
     display: none !important;
   }
 
+  /*
+   * Once a plan has been generated, print ONLY the plan (title, subtitle,
+   * table): hide every element on the host page that is not the plan, not
+   * inside it, and not an ancestor of it. Ancestors stay visible (hiding
+   * one would hide the plan) but are stripped of their box styling so the
+   * plan starts at the top of the first page. Requires :has(); browsers
+   * without it fall back to printing the host page as-is.
+   */
+  body:has(.bmp-plan:not([hidden]))
+    *:not(.bmp-plan):not(.bmp-plan *):not(:has(.bmp-plan)) {
+    display: none !important;
+  }
+
+  body:has(.bmp-plan:not([hidden])) {
+    margin: 0 !important;
+    padding: 0 !important;
+    background: #fff !important;
+  }
+
+  body:has(.bmp-plan:not([hidden])) :has(.bmp-plan) {
+    margin: 0 !important;
+    padding: 0 !important;
+    border: 0 !important;
+    border-radius: 0 !important;
+    background: transparent !important;
+    box-shadow: none !important;
+    width: auto !important;
+    max-width: none !important;
+    min-height: 0 !important;
+  }
+
+  body:has(.bmp-plan:not([hidden])) .bmp-plan {
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+
   .bmp-widget {
     color: #000;
     background: #fff;
