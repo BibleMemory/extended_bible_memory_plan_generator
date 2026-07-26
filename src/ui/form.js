@@ -38,9 +38,11 @@ function clampInt(value, min, max, fallback) {
 
 /**
  * Render the input form into `container` and wire up its events.
- * Calls `onGenerate({ book, startDate, versesPerDay, daysPerWeek })` on submit.
+ * Calls `onGenerate({ book, startDate, versesPerDay, daysPerWeek, chapter })`
+ * on submit. `initial` (optional, from a shared link) prefills the fields:
+ * { book, chapter, startDateStr, versesPerDay, daysPerWeek }.
  */
-export function buildForm(container, onGenerate) {
+export function buildForm(container, onGenerate, initial = null) {
   const form = document.createElement('form');
   form.className = 'bmp-form';
 
@@ -173,6 +175,15 @@ export function buildForm(container, onGenerate) {
     updateCallout();
   });
   chapterSelect.addEventListener('change', updateCallout);
+
+  if (initial) {
+    bookSelect.value = initial.book.name;
+    populateChapters();
+    chapterSelect.value = initial.chapter === null ? 'all' : String(initial.chapter);
+    if (initial.startDateStr) dateInput.value = initial.startDateStr;
+    vpdInput.value = String(initial.versesPerDay);
+    dpwInput.value = String(initial.daysPerWeek);
+  }
   updateCallout();
 
   form.addEventListener('submit', (event) => {
