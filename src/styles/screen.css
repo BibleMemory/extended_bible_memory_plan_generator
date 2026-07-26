@@ -154,10 +154,12 @@
 .bmp-actions {
   display: flex;
   justify-content: center;
+  gap: 0.75em;
   margin: 0 0 1.5em;
 }
 
-.bmp-print {
+.bmp-print,
+.bmp-download {
   padding: 0.5em 1.25em;
   border: 1px solid #2a2a2a;
   border-radius: 3px;
@@ -169,7 +171,8 @@
   cursor: pointer;
 }
 
-.bmp-print:hover {
+.bmp-print:hover,
+.bmp-download:hover {
   background: #2a2a2a;
   color: #fff;
 }

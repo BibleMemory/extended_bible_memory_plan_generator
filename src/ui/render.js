@@ -3,6 +3,8 @@
 // plan table. No DOM dependency in the pure helpers below, so they can be
 // unit-tested without jsdom.
 
+import { buildPlanPdf } from '../lib/plan-pdf.js';
+
 const MONTH_ABBR = [
   'Jan.', 'Feb.', 'Mar.', 'Apr.', 'May', 'Jun.',
   'Jul.', 'Aug.', 'Sep.', 'Oct.', 'Nov.', 'Dec.',
@@ -153,6 +155,30 @@ export function renderPlan(container, plan, options = {}) {
   printButton.textContent = 'Print';
   printButton.addEventListener('click', () => window.print());
   actions.appendChild(printButton);
+
+  // Client-generated PDF: pagination is ours, so table headings repeat on
+  // every page even where the browser's print engine won't (Safari).
+  const pdfButton = document.createElement('button');
+  pdfButton.type = 'button';
+  pdfButton.className = 'bmp-download';
+  pdfButton.textContent = 'Download PDF';
+  pdfButton.addEventListener('click', () => {
+    const { bytes, filename } = buildPlanPdf({
+      title: plan.title,
+      subtitle: buildSubtitle(plan, options),
+      rows: plan.rows.map(rowToCells),
+    });
+    const blob = new Blob([bytes], { type: 'application/pdf' });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = filename;
+    document.body.appendChild(link);
+    link.click();
+    link.remove();
+    setTimeout(() => URL.revokeObjectURL(url), 1000);
+  });
+  actions.appendChild(pdfButton);
 
   const table = buildTable(plan);
 
