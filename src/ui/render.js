@@ -176,12 +176,16 @@ export function renderPlan(container, plan, options = {}) {
   });
   actions.appendChild(pdfButton);
 
-  const table = buildTable(plan);
+  // The table scrolls horizontally inside this wrapper on narrow screens
+  // instead of overflowing the plan card.
+  const tableWrap = document.createElement('div');
+  tableWrap.className = 'bmp-table-wrap';
+  tableWrap.appendChild(buildTable(plan));
 
   section.appendChild(title);
   section.appendChild(subtitle);
   section.appendChild(actions);
-  section.appendChild(table);
+  section.appendChild(tableWrap);
 
   section.hidden = false;
 

@@ -179,9 +179,15 @@
    Table
    --------------------------------------------------------------------- */
 
+/* Scroll container: on screens too narrow for the table, it pans
+   horizontally inside the plan card rather than overflowing it. */
+.bmp-table-wrap {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
 .bmp-table {
   width: auto;
-  max-width: 100%;
   margin: 0 auto;
   border-collapse: collapse;
   font-family: Georgia, 'Times New Roman', Times, serif;
@@ -193,6 +199,7 @@
   padding: 0.5em 1.25em;
   text-align: center;
   vertical-align: middle;
+  white-space: nowrap;
 }
 
 .bmp-table thead th {
