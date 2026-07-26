@@ -15,7 +15,7 @@ A self-contained JavaScript widget that generates personalized day-by-day Bible 
 
 ## Demo
 
-Visit the live demo at [https://jeeves-and-company.github.io/ghost_bible_memory_plan_generator/](https://jeeves-and-company.github.io/ghost_bible_memory_plan_generator/) to test the widget and see the print layout.
+Visit the live demo at [https://biblememory.github.io/ghost_bible_memory_plan_generator/](https://biblememory.github.io/ghost_bible_memory_plan_generator/) to test the widget and see the print layout.
 
 ## Installation
 
@@ -28,7 +28,7 @@ Works on Ghost(Pro) and self-hosted; no theme changes needed.
 
 ```html
 <div data-bible-memory-plan></div>
-<script src="https://cdn.jsdelivr.net/gh/Jeeves-and-Company/ghost_bible_memory_plan_generator@v1.0.0/dist/bible-memory-plan.min.js" defer></script>
+<script src="https://cdn.jsdelivr.net/gh/BibleMemory/ghost_bible_memory_plan_generator@v1.0.0/dist/bible-memory-plan.min.js" defer></script>
 ```
 
 3. **Publish the page.** The widget loads and mounts automatically.
@@ -37,7 +37,7 @@ Works on Ghost(Pro) and self-hosted; no theme changes needed.
 
 The URL above pins the bundle to release `v1.0.0`. To upgrade to a newer release:
 
-1. Visit [GitHub Releases](https://github.com/Jeeves-and-Company/ghost_bible_memory_plan_generator/releases) and find the tag you want (e.g., `v1.1.0`).
+1. Visit [GitHub Releases](https://github.com/BibleMemory/ghost_bible_memory_plan_generator/releases) and find the tag you want (e.g., `v1.1.0`).
 2. Replace `@v1.0.0` in the script URL with the new version tag, e.g., `@v1.1.0`.
 3. Save the page. Browsers will download the new bundle on next visit.
 
@@ -136,4 +136,4 @@ See `LICENSE` for full text.
 
 ---
 
-**Questions?** Check the [GitHub issues](https://github.com/Jeeves-and-Company/ghost_bible_memory_plan_generator/issues) or open a new one.
+**Questions?** Check the [GitHub issues](https://github.com/BibleMemory/ghost_bible_memory_plan_generator/issues) or open a new one.
