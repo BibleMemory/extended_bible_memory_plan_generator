@@ -1,0 +1,91 @@
+/*
+ * Bible Memory Plan Generator — print styles
+ *
+ * Wrapped in @media print even though this file may also be loaded with
+ * media="print" on the <link>, so it stays safe either way. Goal: a clean
+ * black-on-white printout with the table headings repeating on every page.
+ */
+
+@media print {
+  /* Hide interactive chrome that has no place on paper. */
+  .bmp-widget .bmp-form,
+  .bmp-widget .bmp-callout,
+  .bmp-widget .bmp-actions {
+    display: none !important;
+  }
+
+  .bmp-widget {
+    color: #000;
+    background: #fff;
+    font-size: 12pt;
+    line-height: 1.4;
+  }
+
+  .bmp-widget * {
+    color: #000 !important;
+    background: transparent !important;
+    box-shadow: none !important;
+    text-shadow: none !important;
+  }
+
+  .bmp-widget .bmp-title {
+    margin: 0 0 0.2em;
+    font-size: 18pt;
+    text-align: center;
+    break-after: avoid;
+    page-break-after: avoid;
+  }
+
+  .bmp-widget .bmp-subtitle {
+    margin: 0 0 0.8em;
+    font-size: 11pt;
+    font-style: italic;
+    text-align: center;
+    break-after: avoid;
+    page-break-after: avoid;
+  }
+
+  .bmp-widget .bmp-table {
+    width: auto;
+    margin: 0 auto;
+    border-collapse: collapse;
+    font-size: 10.5pt;
+  }
+
+  .bmp-widget .bmp-table th,
+  .bmp-widget .bmp-table td {
+    padding: 0.3em 0.7em;
+    text-align: center;
+    border: none;
+  }
+
+  /* Repeat the header row on every printed page. */
+  .bmp-widget .bmp-table thead {
+    display: table-header-group;
+  }
+
+  .bmp-widget .bmp-table tfoot {
+    display: table-footer-group;
+  }
+
+  .bmp-widget .bmp-table thead th {
+    border-bottom: 1px solid #000;
+    font-weight: 700;
+  }
+
+  .bmp-widget .bmp-th-sub {
+    display: block;
+    font-weight: 400;
+    font-size: 0.85em;
+  }
+
+  .bmp-widget .bmp-table tbody tr {
+    border-bottom: 0.5pt solid #999;
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+
+  .bmp-widget .bmp-off td {
+    font-style: italic;
+  }
+}
