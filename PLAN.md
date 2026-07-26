@@ -73,8 +73,10 @@ Rules the generator must follow (all observed in the PDF):
    subtitle line (the appendix omits it; we know the real start date).
 6. **Verses per day > 1**: "Today's verse" becomes a range (e.g. `1:1–2`),
    "Previous verse" is the previous work day's range, and the cumulative
-   review runs from `1:1` through the end of yesterday's range. Ranges never
-   split awkwardly — the last day simply takes however many verses remain.
+   review runs from `1:1` through the end of **today's** range inclusive —
+   the published table shows day 2 (today `1:2`) reviewing `1:1–2`. Ranges
+   never split awkwardly — the last day simply takes however many verses
+   remain.
 7. The plan ends on the day the last verse of the book is assigned (no
    trailing day-off rows).
 
@@ -222,8 +224,12 @@ any discrepancy against known checksums (Ephesians 155, Bible-wide totals).
 **Phase 2 — Engine (agent 3).**
 Pure functions: `generateSchedule({book, startDate, versesPerDay,
 daysPerWeek}) → {title, rows[], totalDays, warning}` and the reference-range
-formatter. Transcribe Appendix 2 into `test/fixtures/ephesians-golden.json`
-and make the generator match it exactly. Commit only when green.
+formatter. Pin the generator to Appendix 2 via a golden checkpoint suite in
+`test/schedule.test.js`: 13 exact rows transcribed from the published table
+(days 1, 2, 6, 8, 13, 15, 27, 29, 53, 78, 115, 153, 180) plus structural
+invariants (off-day pattern, 180-row total, title). Full row-for-row
+verification of all 180 rows happens in Phase 6 against the live DOM and
+print-to-PDF output. Commit only when green.
 
 **Phase 3 — UI (agent 4, depends on 1–2).**
 Form with the four inputs and defaults; on submit, render the plan table;
@@ -242,7 +248,7 @@ workflow (`.github/workflows/pages.yml`) publishing `dist/` + a demo page,
 README with both install paths (Ghost(Pro)-compatible).
 
 **Phase 6 — QA (agent 7, then coordinator).**
-- `vitest` suite green, golden fixture exact.
+- `vitest` suite green, golden checkpoints exact.
 - Playwright: load widget in headless Chromium, generate Ephesians plan,
   print-to-PDF, assert page count > 1 and headings present on pages 2+.
 - Edge cases: Psalms (2,461 verses — longest), Obadiah/Philemon/2 John/3 John

@@ -6,10 +6,12 @@
   A full-width page template for displaying the Bible memory plan widget.
 
   Installation:
-  1. Copy this file to your Ghost theme's default template directory
-     (e.g., mytheme/default.hbs or mytheme/page.hbs)
-  2. In the Ghost Admin panel, create or edit a page and select
-     "Memory Plan" as its custom template from the page settings.
+  1. Copy this file into the root of your Ghost theme, alongside default.hbs
+     (do not overwrite default.hbs — this template extends it via {{!< default}}).
+  2. In the Ghost Admin panel, create a page whose slug is "memory-plan";
+     Ghost applies page-{slug}.hbs to it automatically. To choose the template
+     from the dropdown in page settings instead, rename this file to
+     custom-memory-plan.hbs (only custom-*.hbs templates appear in that picker).
 
   CSS Asset Paths:
   - If hosting the bundle in your theme's assets/built/ directory:

@@ -47,8 +47,8 @@ Pinned version tags mean published blog pages never break if we push new code; y
 
 For theme integrators or users comfortable editing theme files:
 
-1. **Copy** `ghost/page-memory-plan.hbs` into your theme's template directory (e.g., `mytheme/default.hbs`).
-2. **In Ghost Admin,** create or edit a page and select "Memory Plan" from the template picker in page settings.
+1. **Copy** `ghost/page-memory-plan.hbs` into the root of your theme, alongside `default.hbs` (do not overwrite `default.hbs` — this template extends it).
+2. **In Ghost Admin,** create a page whose slug is `memory-plan`; Ghost applies `page-{slug}.hbs` to it automatically. (If you would rather pick the template from the dropdown in page settings, rename the file to `custom-memory-plan.hbs` — only `custom-*.hbs` templates appear in that picker.)
 3. **Choose your asset path:**
    - **CDN (recommended):** Edit the `.hbs` file to uncomment the jsDelivr line. No manual files needed.
    - **Self-hosted:** Copy `dist/bible-memory-plan.min.js` to `theme/assets/built/`, then uncomment the `{{asset}}` line in the template.
@@ -79,13 +79,13 @@ Runs the full test suite, including the golden test that reproduces Appendix 2 o
 
 ### Live demo
 
-Open `demo/index.html` in a web server:
+`demo/index.html` loads the widget from `src/` via native ES modules, so the server must be rooted at the repo (not at `demo/`):
 
 ```bash
-npx http-server demo
+npx http-server .
 ```
 
-Then visit `http://localhost:8080/index.html` to interact with the widget during development.
+Then visit `http://localhost:8080/demo/index.html` to interact with the widget during development.
 
 ## Data Notes
 
