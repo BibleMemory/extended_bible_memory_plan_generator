@@ -31,6 +31,14 @@ function mount(host) {
     const plan = generateSchedule({ book, startDate, versesPerDay, daysPerWeek, chapter });
     renderPlan(widget, plan, lastOptions);
 
+    // Ask the ESV Crossref tool (if the host page loads it) to link the
+    // fresh references — it only auto-links once, at window.load.
+    try {
+      window.dispatchEvent(new Event('esv-crossref.trigger-linkify'));
+    } catch {
+      // No listeners or restricted context: links are simply not added.
+    }
+
     // Reflect the selection in the URL (replace, not push, so Back still
     // leaves the page) — this is what makes the link shareable.
     try {

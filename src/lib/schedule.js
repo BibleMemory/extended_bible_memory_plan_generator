@@ -120,6 +120,7 @@ export function generateSchedule({ book, startDate, versesPerDay = 1, daysPerWee
     title: chapter === null
       ? `${book.name} Memorization Plan`
       : `${book.name} ${chapter} Memorization Plan`,
+    bookName: book.name,
     rows,
     totalDays: rows.length,
     totalVerses,

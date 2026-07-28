@@ -4,6 +4,7 @@
 // unit-tested without jsdom.
 
 import { buildPlanPdf } from '../lib/plan-pdf.js';
+import { getBookAbbrev } from '../data/book-abbrevs.js';
 
 const MONTH_ABBR = [
   'Jan.', 'Feb.', 'Mar.', 'Apr.', 'May', 'Jun.',
@@ -113,6 +114,12 @@ function buildTable(plan) {
   const table = document.createElement('table');
   table.className = 'bmp-table';
 
+  // Verse references carry an abbreviated book name ("Eph. 1:1") so the
+  // ESV Crossref tool — if the host page loads it — can turn them into
+  // linked popups. "N/A" cells are left alone.
+  const abbrev = getBookAbbrev(plan.bookName);
+  const ref = (text) => (text === 'N/A' ? text : `${abbrev} ${text}`);
+
   const thead = document.createElement('thead');
   const headRow = document.createElement('tr');
   const checkTh = document.createElement('th');
@@ -142,11 +149,15 @@ function buildTable(plan) {
     }
     const cells = rowToCells(row);
     const tr = document.createElement('tr');
+    // Date cells are excluded from crossref scanning: "Mar. 15" would
+    // otherwise linkify as Mark 15.
+    const dateCell = td(cells.date);
+    dateCell.className = 'esv-crossref-ignore';
     if (cells.off) {
       tr.className = 'bmp-off';
       tr.appendChild(td('')); // no checkbox on off days
       tr.appendChild(td(String(cells.day)));
-      tr.appendChild(td(cells.date));
+      tr.appendChild(dateCell);
       const offCell = document.createElement('td');
       offCell.colSpan = 3;
       offCell.textContent = 'Day off';
@@ -173,10 +184,10 @@ function buildTable(plan) {
       checkCell.appendChild(check);
       tr.appendChild(checkCell);
       tr.appendChild(td(String(cells.day)));
-      tr.appendChild(td(cells.date));
-      tr.appendChild(td(cells.today));
-      tr.appendChild(td(cells.previous));
-      tr.appendChild(td(cells.review));
+      tr.appendChild(dateCell);
+      tr.appendChild(td(ref(cells.today)));
+      tr.appendChild(td(ref(cells.previous)));
+      tr.appendChild(td(ref(cells.review)));
     }
     tbody.appendChild(tr);
   }
